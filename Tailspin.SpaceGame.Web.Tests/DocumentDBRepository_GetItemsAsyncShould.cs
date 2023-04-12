@@ -84,7 +84,7 @@ namespace Tests
         [TestCase("Pinwheel")]
         [TestCase("NGC 1300")]
         [TestCase("Messier 82")]
-        public void FetchOnlyRequestedGameRegion(string gameRegion)
+        public async Task FetchOnlyRequestedGameRegion(string gameRegion)
         {
             const int PAGE = 0; // take the first page of results
             const int MAX_RESULTS = 10; // sample up to 10 results
@@ -100,7 +100,7 @@ namespace Tests
                 PAGE,
                 MAX_RESULTS
             );
-            IEnumerable<Score> scores = scoresTask.Result;
+            IEnumerable<Score> scores = await scoresTask;
 
             // Verify that each score's game region matches the provided game region.
             Assert.That(scores, Is.All.Matches<Score>(score => score.GameRegion == gameRegion));
